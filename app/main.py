@@ -168,14 +168,31 @@ def checkAround(pOurSnake, pBoard):
 
 def moveChoice(pOurSnake, pBoard, pSnakes, pFood):
     global WIDTH, HEIGHT, TURN, SNAKE_NAME, LIFE
-    
+
     data = bottle.request.json
+
+    snakeCoords = pOurSnake["coords"]
+    foodCoords = pBoard["food"]
+    closestFoodX, closestFoodY = foodCoords[0]
+    snakeHeadX, snakeHeadY = snakeCoords[0]
+
+    closestFoodDistance = abs(snakeHeadX - closestFoodX) + abs(snakeHeadY - closestFoodY)
+
+    for foodPos in foodCoords:
+        foodX, foodY = foodPos
+        tempFoodDistance = abs(snakeHeadX - foodX) + abs(snakeHeadY - foodY)
+
+        if (tempFoodDistance < closestFoodDistance):
+            closestFoodDistance = tempFoodDistance
+            closestFoodX = foodX
+            closestFoodY = foodY
+
     dirs = 4 # number of possible directions to move on the map
     dx = [1, 0, -1, 0]
     dy = [0, 1, 0, -1]
 
-    n = WIDTH # horizontal size of the map
-    m = HEIGHT # vertical size of the map
+    n = data["width"] # horizontal size of the map
+    m = data["height"] # vertical size of the map
     the_map = []
     row = [0] * n
     for i in range(m): # create empty map
@@ -184,13 +201,13 @@ def moveChoice(pOurSnake, pBoard, pSnakes, pFood):
         print(the_map[i])
 
     #fill map with obsticles
-    for x in range(0, WIDTH):
-        for y in range(0, HEIGHT):
+    for x in range(0, n):
+        for y in range(0, m):
             if(data["board"][x][y] == "head" or data["board"][x][y] == "body"):
                 the_map[y][x] = 1
 
     #position of the snake head and the closest food
-    snaketofood = (headX, headY, foodX, foodY)
+    snaketofood = (snakeHeadX, snakeHeadY, closestFoodX, closestFoodY)
 
     (xA, yA, xB, yB) = snaketofood
 
@@ -231,7 +248,7 @@ def moveChoice(pOurSnake, pBoard, pSnakes, pFood):
             elif xy == 4:
                 print 'F', # finish
         print
-        
+
         return "left"
 
 def getOurSnake(pData):

@@ -1,8 +1,8 @@
 import bottle
 import json
 
-global GAME_ID, WIDTH, HEIGHT, SNAKE_NAME, SNAKE_COLOR, SNAKE_TAUNT, TURN, LIFE
-
+global GAME_ID, WIDTH, HEIGHT, SNAKE_NAME, SNAKE_COLOR, SNAKE_TAUNT, TURN, LIFE, HEAD_URL
+HEAD_URL = "http://i.imgur.com/T9Rw249.jpg"
 SNAKE_NAME = "MarJo"
 SNAKE_COLOR = "#221E1D"
 SNAKE_TAUNT = "taunt"
@@ -13,7 +13,7 @@ def moveChoice(pOurSnake, pBoard, pSnakes, pFood):
     print "Where the magic is going to happen"
 
 
-    return "left", "right", "up", "down"
+    return "left"
 
 def getOurSnake(pData):
     global SNAKE_NAME
@@ -41,7 +41,7 @@ def start():
     return json.dumps({
         'name': SNAKE_NAME,
         'color': SNAKE_COLOR,
-        'head_url': 'http://battlesnake-python.herokuapp.com',
+        'head_url': HEAD_URL,
         'taunt': SNAKE_TAUNT
     })
 
@@ -61,7 +61,7 @@ def move():
     moveDirection = moveChoice(ourSnakeObject, boardObject, snakesObjects, foodObject)
 
     return json.dumps({
-        'move': 'left',
+        'move': moveDirection,
         'taunt': SNAKE_TAUNT
     })
 

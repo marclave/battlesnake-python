@@ -1,6 +1,25 @@
 import bottle
 import json
 
+global GAME_ID, WIDTH, HEIGHT, SNAKE_NAME, SNAKE_COLOR, SNAKE_TAUNT, TURN, LIFE
+
+SNAKE_NAME = "MarJo"
+SNAKE_COLOR = "#221E1D"
+SNAKE_TAUNT = "taunt"
+LIFE = 100
+
+def moveChoice(pOurSnake, pBoard, pSnakes, pFood):
+    global WIDTH, HEIGHT, TURN, SNAKE_NAME, LIFE
+    print "Where the magic is going to happen"
+
+
+    return "left", "right", "up", "down"
+
+def getOurSnake(pData):
+    global SNAKE_NAME
+    for snake in pData["snakes"]:
+        if snake["name"] == SNAKE_NAME:
+            return snake
 
 @bottle.get('/')
 def index():
@@ -13,23 +32,37 @@ def index():
 
 @bottle.post('/start')
 def start():
+    global GAME_ID, WIDTH, HEIGHT
     data = bottle.request.json
+    GAME_ID = data["game_id"] # TODO marc: check this
+    WIDTH = data["width"]
+    HEIGHT = data["height"]
 
     return json.dumps({
-        'name': 'battlesnake-python',
-        'color': '#00ff00',
+        'name': SNAKE_NAME,
+        'color': SNAKE_COLOR,
         'head_url': 'http://battlesnake-python.herokuapp.com',
-        'taunt': 'battlesnake-python!'
+        'taunt': SNAKE_TAUNT
     })
 
 
 @bottle.post('/move')
 def move():
+    global GAME_ID, WIDTH, HEIGHT, TURN, SNAKE_NAME
     data = bottle.request.json
+
+    TURN = data["turn"]
+    snakesObjects = data["snakes"]
+    foodObject = data["food"]
+    boardObject = data["board"]
+
+    ourSnakeObject = getOurSnake(data)
+
+    moveDirection = moveChoice(ourSnakeObject, boardObject, snakesObjects, foodObject)
 
     return json.dumps({
         'move': 'left',
-        'taunt': 'battlesnake-python!'
+        'taunt': SNAKE_TAUNT
     })
 
 

@@ -212,7 +212,7 @@ def moveChoice(pOurSnake, pBoardTest, pSnakes, pFood):
     #fill map with obsticles
     for x in range(0, n):
         for y in range(0, m):
-            if(data["board"][x][y] == "head" or data["board"][x][y] == "body"):
+            if(data["board"][x][y]["state"] == "head" or data["board"][x][y]["state"] == "body"):
                 the_map[y][x] = 1
 
     #position of the snake head and the closest food
@@ -311,7 +311,7 @@ def move():
     ourSnakeObject = getOurSnake(data)
 
     moveDirection = moveChoice(ourSnakeObject, boardObject, snakesObjects, foodObject)
-    moveTestDirection = checkAround(ourSnakeObject, boardObject)
+    #moveTestDirection = checkAround(ourSnakeObject, boardObject)
 
     return json.dumps({
         'move': moveTestDirection,

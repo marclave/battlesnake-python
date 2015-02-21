@@ -5,7 +5,7 @@ import json
 @bottle.get('/')
 def index():
     return """
-        <a href="https://github.com/sendwithus/battlesnake-python">
+        <a href="https://github.com/marclave/battlesnake-python">
             battlesnake-python
         </a>
     """

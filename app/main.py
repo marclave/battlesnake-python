@@ -9,7 +9,7 @@ SNAKE_TAUNT = "taunt"
 LIFE = 100
 
 def checkAround(pOurSnake, pBoard):
-    coords = pOurSnake[coords]
+    coords = pOurSnake["coords"]
     headX, headY = coords[0]
 
     prevX, prevY = coords[1]
@@ -51,8 +51,7 @@ def index():
 def start():
     global GAME_ID, WIDTH, HEIGHT
     data = bottle.request.json
-    print data
-    
+
     GAME_ID = data["game_id"] # TODO marc: check this
     WIDTH = data["width"]
     HEIGHT = data["height"]

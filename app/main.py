@@ -74,6 +74,9 @@ def move():
     foodObject = data["food"]
     boardObject = data["board"]
 
+    for obj in foodObject:
+        print obj
+
     ourSnakeObject = getOurSnake(data)
 
     moveDirection = moveChoice(ourSnakeObject, boardObject, snakesObjects, foodObject)

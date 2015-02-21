@@ -8,6 +8,23 @@ SNAKE_COLOR = "#221E1D"
 SNAKE_TAUNT = "taunt"
 LIFE = 100
 
+def checkAround(pOurSnake, pBoard):
+    coords = pOurSnake[coords]
+    headX, headY = coords[0]
+
+    prevX, prevY = coords[1]
+
+    if pBoard[headX + 1][headY]["state"] == "food":
+        return "right" 
+    elif pBoard[headX - 1][headY]["state"] == "food":
+        return "left"
+    elif pBoard[headX][headY + 1]["state"] == "food":
+        return "up"
+    elif pBoard[headX][headY -1]["state"] == "food":
+        return "down"
+    else:
+        return "up"
+
 def moveChoice(pOurSnake, pBoard, pSnakes, pFood):
     global WIDTH, HEIGHT, TURN, SNAKE_NAME, LIFE
     print "Where the magic is going to happen"
@@ -25,7 +42,7 @@ def getOurSnake(pData):
 def index():
     return """
         <a href="https://github.com/marclave/battlesnake-python">
-            battlesnake-python
+            ya-boi-battlesnake-python
         </a>
     """
 
@@ -59,9 +76,10 @@ def move():
     ourSnakeObject = getOurSnake(data)
 
     moveDirection = moveChoice(ourSnakeObject, boardObject, snakesObjects, foodObject)
+    moveTestDirection = checkAround(ourSnakeObject, boardObject)
 
     return json.dumps({
-        'move': moveDirection,
+        'move': moveTestDirection,
         'taunt': SNAKE_TAUNT
     })
 

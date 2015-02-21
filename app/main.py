@@ -138,6 +138,8 @@ def pathFind(the_map, n, m, dirs, dx, dy, xA, yA, xB, yB):
 def checkAround(pOurSnake, pBoard):
     snakeCoords = pOurSnake["coords"]
     foodCoords = pBoard["food"]
+    print "check around food coords:"
+    print foodCoords
     closestFoodX, closestFoodY = foodCoords[0]
     snakeHeadX, snakeHeadY = snakeCoords[0]
 
@@ -166,13 +168,13 @@ def checkAround(pOurSnake, pBoard):
     else:
         return "up"
 
-def moveChoice(pOurSnake, pBoard, pSnakes, pFood):
+def moveChoice(pOurSnake, pBoardTest, pSnakes, pFood):
     global WIDTH, HEIGHT, TURN, SNAKE_NAME, LIFE
 
-    data = bottle.request.json
-
     snakeCoords = pOurSnake["coords"]
-    foodCoords = pBoard["food"]
+    foodCoords = pFood #pBoardTest["food"]
+    print "moveChoice food coords"
+    print foodCoords
     closestFoodX, closestFoodY = foodCoords[0]
     snakeHeadX, snakeHeadY = snakeCoords[0]
 

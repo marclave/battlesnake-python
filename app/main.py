@@ -171,6 +171,9 @@ def checkAround(pOurSnake, pBoard):
 def moveChoice(pOurSnake, pBoardTest, pSnakes, pFood):
     global WIDTH, HEIGHT, TURN, SNAKE_NAME, LIFE
 
+    data = bottle.request.json
+
+
     snakeCoords = pOurSnake["coords"]
     foodCoords = pFood #pBoardTest["food"]
     print "moveChoice food coords"

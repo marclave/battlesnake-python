@@ -51,6 +51,8 @@ def index():
 def start():
     global GAME_ID, WIDTH, HEIGHT
     data = bottle.request.json
+    print data
+    
     GAME_ID = data["game_id"] # TODO marc: check this
     WIDTH = data["width"]
     HEIGHT = data["height"]

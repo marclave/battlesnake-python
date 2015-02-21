@@ -283,6 +283,9 @@ def start():
     GAME_ID = data["game_id"] # TODO marc: check this
     WIDTH = data["width"]
     HEIGHT = data["height"]
+    print "In start"
+    print WIDTH
+    print HEIGHT
 
     return json.dumps({
         'name': SNAKE_NAME,

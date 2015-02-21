@@ -200,8 +200,8 @@ def moveChoice(pOurSnake, pBoardTest, pSnakes, pFood):
     dx = [1, 0, -1, 0]
     dy = [0, 1, 0, -1]
 
-    n = data["width"] # horizontal size of the map
-    m = data["height"] # vertical size of the map
+    n = WIDTH # horizontal size of the map
+    m = HEIGHT # vertical size of the map
     the_map = []
     row = [0] * n
     for i in range(m): # create empty map

@@ -13,7 +13,11 @@ SNAKE_NAME = "MarJo"
 SNAKE_COLOR = "#221E1D"
 SNAKE_TAUNT = "taunt"
 
+
 # ADDED CODE --------------
+# All credit for implemtation of A star aglorithm, with modifications to fit our application, go to FB36: 
+#http://code.activestate.com/recipes/577519-a-star-shortest-path-algorithm/
+#
 class node:
     xPos = 0 # x position
     yPos = 0 # y position
@@ -185,14 +189,6 @@ def moveChoice(pOurSnake, pFood, pData):
         for y in range(0, m):
             if(data["board"][x][y]["state"] == "head" or data["board"][x][y]["state"] == "body"):
                 the_map[y][x] = 1
-                if ((y+1) < (n-1)):
-                    the_map[y+1][x] = 1
-                if ((y-1) > 0):
-                    the_map[y-1][x] = 1
-                if ((x+1) < (m-1)):
-                    the_map[y][x+1] = 1
-                if ((x-1) > 0):
-                    the_map[y][x-1] = 1
 
 
     for i in range(len(the_map)):
@@ -236,18 +232,6 @@ def moveChoice(pOurSnake, pFood, pData):
             elif xy == 4:
                 print 'F', # finish
         print
-
-    if the_map[closestFoodY][closestFoodX] == 1:
-        snaketofood = (snakeHeadX, snakeHeadY, secondClosestX, secondClosestY)
-        print "collision detected!"
-        (xA, yA, xB, yB) = snaketofood
-
-        print 'Start: ', xA, yA
-        print 'Finish: ', xB, yB
-        Move = pathFind(the_map, n, m, dirs, dx, dy, xA, yA, xB, yB)
-        print 'Next Move:'
-        print Move
-
 
     if Move == "1":
         return "down"

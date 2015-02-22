@@ -142,7 +142,7 @@ def findClosestFood(pFoodCoords, pSnakeCoords):
 
     closestFoodDistance = abs(snakeHeadX - closestFoodX) + abs(snakeHeadY - closestFoodY)
 
-    for foodPos in foodCoords:
+    for foodPos in pFoodCoords:
         foodX, foodY = foodPos
         tempFoodDistance = abs(snakeHeadX - foodX) + abs(snakeHeadY - foodY)
 

@@ -177,7 +177,6 @@ def moveChoice(pOurSnake, pBoardTest, pSnakes, pFood, pData):
 
     data = pData
 
-
     snakeCoords = pOurSnake["coords"]
     foodCoords = pFood #pBoardTest["food"]
     print "moveChoice food coords"
@@ -212,9 +211,9 @@ def moveChoice(pOurSnake, pBoardTest, pSnakes, pFood, pData):
     #fill map with obsticles
     for x in range(0, n):
         for y in range(0, m):
-            print "data states:"
-            print data["board"][x][y]["state"]
-            print data["board"][x][y]
+            #print "data states:"
+            #print data["board"][x][y]["state"]
+            #print data["board"][x][y]
             if(data["board"][x][y]["state"] == "head" or data["board"][x][y]["state"] == "body"):
                 the_map[y][x] = 1
 
@@ -261,7 +260,16 @@ def moveChoice(pOurSnake, pBoardTest, pSnakes, pFood, pData):
                 print 'F', # finish
         print
 
+    if route[0] == 1:
+        return "down"
+    elif route[0] == 0:
+        return "right"
+    elif route[0] == 2:
         return "left"
+    elif route[0] == 3:
+        return "up"
+    else:
+        return "down"
 
 def getOurSnake(pData):
     global SNAKE_NAME

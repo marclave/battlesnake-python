@@ -206,7 +206,7 @@ def moveChoice(pOurSnake, pBoardTest, pSnakes, pFood, pData):
     for i in range(m): # create empty map
         the_map.append(list(row))
     for i in range(len(the_map)):
-        print(the_map[i])
+        print the_map[i]
 
     #fill map with obsticles
     for x in range(0, n):
@@ -292,7 +292,8 @@ def start():
     global GAME_ID, WIDTH, HEIGHT
     data = bottle.request.json
 
-    GAME_ID = data["game_id"] # TODO marc: check this
+    GAME_ID = data["game_id"]
+    print "Changed the width and height"
     WIDTH = data["width"]
     HEIGHT = data["height"]
     print "In start"
@@ -316,9 +317,6 @@ def move():
     snakesObjects = data["snakes"]
     foodObject = data["food"]
     boardObject = data["board"]
-
-    for obj in foodObject:
-        print obj
 
     ourSnakeObject = getOurSnake(data)
 

@@ -192,11 +192,11 @@ def moveChoice(pOurSnake, pFood, pData):
                 for snake1 in data["snakes"]:
                     if snake1["name"] != SNAKE_NAME:
                         headloc = snake1["coords"][0]
-                        if headloc[1]+1 < n:
+                        if headloc[1]+1 < m:
                             the_map[headloc[1]+1][headloc[0]] = 1
                         if headloc[1]-1 > 0:
                             the_map[headloc[1]-1][headloc[0]] = 1
-                        if headloc[0]+1 < m:
+                        if headloc[0]+1 < n:
                             the_map[headloc[1]][headloc[0]+1] = 1
                         if headloc[0]-1 > 0:
                             the_map[headloc[1]][headloc[0]-1] = 1

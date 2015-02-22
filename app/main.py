@@ -262,7 +262,7 @@ def moveChoice(pOurSnake, pFood, pData):
         if (snakeHeadY - 1) == m:
             return "up"
             
-        return "down"
+        return "right"
 
 def getOurSnake(pData):
     global SNAKE_NAME

@@ -253,6 +253,15 @@ def moveChoice(pOurSnake, pFood, pData):
     elif Move == "3":
         return "up"
     else:
+        if (snakeHeadX + 1) == n:
+            return "left"
+        if (snakeHeadX - 1) == n:
+            return "right"
+        if (snakeHeadY + 1) == m:
+            return "down"
+        if (snakeHeadY - 1) == m:
+            return "up"
+            
         return "down"
 
 def getOurSnake(pData):

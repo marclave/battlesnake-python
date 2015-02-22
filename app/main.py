@@ -185,6 +185,11 @@ def moveChoice(pOurSnake, pFood, pData):
         for y in range(0, m):
             if(data["board"][x][y]["state"] == "head" or data["board"][x][y]["state"] == "body"):
                 the_map[y][x] = 1
+                the_map[y+1][x] = 1
+                the_map[y-1][x] = 1
+                the_map[y][x+1] = 1
+                the_map[y][x-1] = 1
+
 
     for i in range(len(the_map)):
         print the_map[i]
@@ -227,6 +232,18 @@ def moveChoice(pOurSnake, pFood, pData):
             elif xy == 4:
                 print 'F', # finish
         print
+
+    if the_map[closestFoodY][closestFoodX] == 1:
+        snaketofood = (snakeHeadX, snakeHeadY, secondClosestX, secondClosestY)
+        print "collision detected!"
+        (xA, yA, xB, yB) = snaketofood
+
+        print 'Start: ', xA, yA
+        print 'Finish: ', xB, yB
+        Move = pathFind(the_map, n, m, dirs, dx, dy, xA, yA, xB, yB)
+        print 'Next Move:'
+        print Move
+
 
     if Move == "1":
         return "down"

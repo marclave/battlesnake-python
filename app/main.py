@@ -3,8 +3,7 @@ import json
 
 from heapq import heappush, heappop # for priority queue
 import math
-import time
-import random
+
 
 #global GAME_ID, WIDTH, HEIGHT, SNAKE_NAME, SNAKE_COLOR, SNAKE_TAUNT, TURN, LIFE, HEAD_URL
 TURN = 0
@@ -95,7 +94,7 @@ def pathFind(the_map, n, m, dirs, dx, dy, xA, yA, xB, yB):
                 path = c + path
                 x += dx[j]
                 y += dy[j]
-            return path
+            return path[0]
 
         # generate moves (child nodes) in all possible dirs
         for i in range(dirs):
@@ -178,9 +177,7 @@ def moveChoice(pOurSnake, pBoardTest, pSnakes, pFood, pData):
     data = pData
 
     snakeCoords = pOurSnake["coords"]
-    foodCoords = pFood #pBoardTest["food"]
-    print "moveChoice food coords"
-    print foodCoords
+    foodCoords = pFood
     closestFoodX, closestFoodY = foodCoords[0]
     snakeHeadX, snakeHeadY = snakeCoords[0]
 
@@ -206,31 +203,26 @@ def moveChoice(pOurSnake, pBoardTest, pSnakes, pFood, pData):
     row = [0] * n
     for i in range(m): # create empty map
         the_map.append(list(row))
-    for i in range(len(the_map)):
-        print the_map[i]
+    
 
     #fill map with obsticles
     for x in range(0, n):
         for y in range(0, m):
-            #print "data states:"
-            #print data["board"][x][y]["state"]
-            #print data["board"][x][y]
             if(data["board"][x][y]["state"] == "head" or data["board"][x][y]["state"] == "body"):
                 the_map[y][x] = 1
 
+    for i in range(len(the_map)):
+        print the_map[i]
     #position of the snake head and the closest food
     snaketofood = (snakeHeadX, snakeHeadY, closestFoodX, closestFoodY)
 
     (xA, yA, xB, yB) = snaketofood
 
-    print 'Map size (X,Y): ', n, m
     print 'Start: ', xA, yA
     print 'Finish: ', xB, yB
-    t = time.time()
-    route = pathFind(the_map, n, m, dirs, dx, dy, xA, yA, xB, yB)
-    print 'Time to generate the route (seconds): ', time.time() - t
-    print 'Route:'
-    print route
+    Move = pathFind(the_map, n, m, dirs, dx, dy, xA, yA, xB, yB)
+    print 'Next Move:'
+    print Move
 
     # mark the route on the map
     if len(route) > 0:
@@ -260,15 +252,14 @@ def moveChoice(pOurSnake, pBoardTest, pSnakes, pFood, pData):
             elif xy == 4:
                 print 'F', # finish
         print
-    print "next move"
-    print route[0]
-    if route[0] == "1":
+
+    if Move == "1":
         return "down"
-    elif route[0] == "0":
+    elif Move == "0":
         return "right"
-    elif route[0] == "2":
+    elif Move == "2":
         return "left"
-    elif route[0] == "3":
+    elif Move == "3":
         return "up"
     else:
         return "down"

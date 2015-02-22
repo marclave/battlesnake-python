@@ -5,17 +5,13 @@ from heapq import heappush, heappop # for priority queue
 import math
 
 
-#global GAME_ID, WIDTH, HEIGHT, SNAKE_NAME, SNAKE_COLOR, SNAKE_TAUNT, TURN, LIFE, HEAD_URL
 TURN = 0
 GAME_ID = 0
-WIDTH = 0
-HEIGHT = 0
+
 HEAD_URL = "http://i.imgur.com/T9Rw249.jpg"
 SNAKE_NAME = "MarJo"
 SNAKE_COLOR = "#221E1D"
 SNAKE_TAUNT = "taunt"
-LIFE = 100
-
 
 # ADDED CODE --------------
 class node:
@@ -138,13 +134,11 @@ def pathFind(the_map, n, m, dirs, dx, dy, xA, yA, xB, yB):
 
 # ADDED CODE --------------
 
-def checkAround(pOurSnake, pBoard):
-    snakeCoords = pOurSnake["coords"]
-    foodCoords = pBoard["food"]
-    print "check around food coords:"
-    print foodCoords
-    closestFoodX, closestFoodY = foodCoords[0]
-    snakeHeadX, snakeHeadY = snakeCoords[0]
+def findClosestFood(pFoodCords, pSnakeCoords):
+    snakeHeadX, snakeHeadY = pSnakeCoords[0]
+    closestFoodX, closestFoodY = pFoodCoords[0]
+    secondClosestX = closestFoodX
+    secondClosestY = closestFoodY
 
     closestFoodDistance = abs(snakeHeadX - closestFoodX) + abs(snakeHeadY - closestFoodY)
 
@@ -153,44 +147,25 @@ def checkAround(pOurSnake, pBoard):
         tempFoodDistance = abs(snakeHeadX - foodX) + abs(snakeHeadY - foodY)
 
         if (tempFoodDistance < closestFoodDistance):
+            secondClosestX = closestFoodX
+            secondClosestY = closestFoodY
+
             closestFoodDistance = tempFoodDistance
             closestFoodX = foodX
             closestFoodY = foodY
 
+    return closestFoodX, closestFoodY, secondClosestX, secondClosestY
 
-    prevX, prevY = snakeCoords[1]
 
-    if pBoard[snakeHeadX + 1][snakeHeadY]["state"] == "food":
-        return "right" 
-    elif pBoard[snakeHeadX - 1][snakeHeadY]["state"] == "food":
-        return "left"
-    elif pBoard[snakeHeadX][snakeHeadY + 1]["state"] == "food":
-        return "up"
-    elif pBoard[snakeHeadX][snakeHeadY -1]["state"] == "food":
-        return "down"
-    else:
-        return "up"
-
-def moveChoice(pOurSnake, pBoardTest, pSnakes, pFood, pData):
-    global WIDTH, HEIGHT, TURN, SNAKE_NAME, LIFE
+def moveChoice(pOurSnake, pFood, pData):
 
     data = pData
 
     snakeCoords = pOurSnake["coords"]
     foodCoords = pFood
-    closestFoodX, closestFoodY = foodCoords[0]
     snakeHeadX, snakeHeadY = snakeCoords[0]
 
-    closestFoodDistance = abs(snakeHeadX - closestFoodX) + abs(snakeHeadY - closestFoodY)
-
-    for foodPos in foodCoords:
-        foodX, foodY = foodPos
-        tempFoodDistance = abs(snakeHeadX - foodX) + abs(snakeHeadY - foodY)
-
-        if (tempFoodDistance < closestFoodDistance):
-            closestFoodDistance = tempFoodDistance
-            closestFoodX = foodX
-            closestFoodY = foodY
+    closestFoodX, closestFoodY, secondClosestX, secondClosestY = findClosestFood(foodCoords, snakeCoords)
 
     dirs = 4 # number of possible directions to move on the map
     dx = [1, 0, -1, 0]
@@ -281,16 +256,8 @@ def index():
 
 @bottle.post('/start')
 def start():
-    global GAME_ID, WIDTH, HEIGHT
+    global SNAKE_NAME, SNAKE_COLOR, HEAD_URL, SNAKE_TAUNT
     data = bottle.request.json
-
-    GAME_ID = data["game_id"]
-    print "Changed the width and height"
-    WIDTH = data["width"]
-    HEIGHT = data["height"]
-    print "In start"
-    print WIDTH
-    print HEIGHT
 
     return json.dumps({
         'name': SNAKE_NAME,
@@ -302,17 +269,14 @@ def start():
 
 @bottle.post('/move')
 def move():
-    global GAME_ID, WIDTH, HEIGHT, TURN, SNAKE_NAME
+    global SNAKE_TAUNT
     data = bottle.request.json
 
-    TURN = data["turn"]
-    snakesObjects = data["snakes"]
     foodObject = data["food"]
-    boardObject = data["board"]
 
     ourSnakeObject = getOurSnake(data)
 
-    moveDirection = moveChoice(ourSnakeObject, boardObject, snakesObjects, foodObject, data)
+    moveDirection = moveChoice(ourSnakeObject, foodObject, data)
     #moveTestDirection = checkAround(ourSnakeObject, boardObject)
 
     return json.dumps({

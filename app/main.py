@@ -134,7 +134,7 @@ def pathFind(the_map, n, m, dirs, dx, dy, xA, yA, xB, yB):
 
 # ADDED CODE --------------
 
-def findClosestFood(pFoodCords, pSnakeCoords):
+def findClosestFood(pFoodCoords, pSnakeCoords):
     snakeHeadX, snakeHeadY = pSnakeCoords[0]
     closestFoodX, closestFoodY = pFoodCoords[0]
     secondClosestX = closestFoodX

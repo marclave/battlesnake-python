@@ -172,10 +172,10 @@ def checkAround(pOurSnake, pBoard):
     else:
         return "up"
 
-def moveChoice(pOurSnake, pBoardTest, pSnakes, pFood):
+def moveChoice(pOurSnake, pBoardTest, pSnakes, pFood, pData):
     global WIDTH, HEIGHT, TURN, SNAKE_NAME, LIFE
 
-    data = bottle.request.json
+    data = pData
 
 
     snakeCoords = pOurSnake["coords"]
@@ -214,7 +214,7 @@ def moveChoice(pOurSnake, pBoardTest, pSnakes, pFood):
         for y in range(0, m):
             print "data states:"
             print data["board"][x][y]["state"]
-            print data["board"][x][y]["state"]
+            print data["board"][x][y]
             if(data["board"][x][y]["state"] == "head" or data["board"][x][y]["state"] == "body"):
                 the_map[y][x] = 1
 
@@ -313,7 +313,7 @@ def move():
 
     ourSnakeObject = getOurSnake(data)
 
-    moveDirection = moveChoice(ourSnakeObject, boardObject, snakesObjects, foodObject)
+    moveDirection = moveChoice(ourSnakeObject, boardObject, snakesObjects, foodObject, data)
     #moveTestDirection = checkAround(ourSnakeObject, boardObject)
 
     return json.dumps({

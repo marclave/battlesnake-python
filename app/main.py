@@ -185,10 +185,14 @@ def moveChoice(pOurSnake, pFood, pData):
         for y in range(0, m):
             if(data["board"][x][y]["state"] == "head" or data["board"][x][y]["state"] == "body"):
                 the_map[y][x] = 1
-                the_map[y+1][x] = 1
-                the_map[y-1][x] = 1
-                the_map[y][x+1] = 1
-                the_map[y][x-1] = 1
+                if ((y+1) < (n-1)):
+                    the_map[y+1][x] = 1
+                if ((y-1) > 0):
+                    the_map[y-1][x] = 1
+                if ((x+1) < (m-1)):
+                    the_map[y][x+1] = 1
+                if ((x-1) > 0):
+                    the_map[y][x-1] = 1
 
 
     for i in range(len(the_map)):

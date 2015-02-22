@@ -225,12 +225,12 @@ def moveChoice(pOurSnake, pBoardTest, pSnakes, pFood, pData):
     print Move
 
     # mark the route on the map
-    if len(route) > 0:
+    if len(Move) > 0:
         x = xA
         y = yA
         the_map[y][x] = 2
-        for i in range(len(route)):
-            j = int(route[i])
+        for i in range(len(Move)):
+            j = int(Move[i])
             x += dx[j]
             y += dy[j]
             the_map[y][x] = 3

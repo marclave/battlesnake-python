@@ -259,14 +259,15 @@ def moveChoice(pOurSnake, pBoardTest, pSnakes, pFood, pData):
             elif xy == 4:
                 print 'F', # finish
         print
-
-    if route[0] == 1:
+    print "next move"
+    print route[0]
+    if route[0] == "1":
         return "down"
-    elif route[0] == 0:
+    elif route[0] == "0":
         return "right"
-    elif route[0] == 2:
+    elif route[0] == "2":
         return "left"
-    elif route[0] == 3:
+    elif route[0] == "3":
         return "up"
     else:
         return "down"
